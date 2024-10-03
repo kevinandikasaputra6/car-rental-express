@@ -1,0 +1,19 @@
+{
+    "cars":[
+        {
+            "name":"TOYOTA",
+            "model":"VOXY",
+            "year":2020
+        },
+        {
+            "name":"HONDA",
+            "model":"CITY",
+            "year":2021
+        },
+        {
+            "name":"HONDA",
+            "model":"CIVIC",
+            "year":2022
+        }
+    ]
+}
