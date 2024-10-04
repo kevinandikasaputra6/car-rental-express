@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cars {
+  id             BigInt    @id @default(autoincrement())
+  manufacture    String?   @db.VarChar
+  type           String?   @db.VarChar
+  license_number String?   @db.VarChar(30)
+  seat           Int?
+  baggage        Int?
+  transmision    String?   @db.VarChar
+  year           DateTime? @db.Date
+  name           String?   @db.VarChar
+  description    String?
+  is_driver      Boolean?
+  is_available   Boolean?  @default(true)
+  img            String?
+  price          Int?
+  create_dt      DateTime? @default(now()) @db.Timestamp(6)
+  update_dt      DateTime? @updatedAt
+  create_by      String?   @db.VarChar
+  update_at      String?   @db.VarChar
+  orders         orders[]
+
+  @@index([name], map: "car_name_index")
+}
+
+model orders {
+  id          BigInt    @id @default(autoincrement())
+  order_no    String    @unique @db.VarChar
+  cars_id     BigInt
+  users_id    BigInt
+  start_time  DateTime? @db.Timestamp(6)
+  finish_time DateTime? @db.Timestamp(6)
+  total       Float?
+  is_driver   Boolean?
+  is_expired  Boolean?
+  status      String?   @db.VarChar
+  is_deleted  Boolean?
+  create_dt   DateTime? @default(now()) @db.Timestamp(6)
+  update_dt   DateTime? @updatedAt
+  create_by   String?   @db.VarChar
+  update_at   String?   @db.VarChar
+  cars        cars?     @relation(fields: [cars_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users       users?    @relation(fields: [users_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id             BigInt    @id @default(autoincrement())
+  fullname       String    @db.VarChar
+  email          String    @unique @db.VarChar(30)
+  address        String    @db.VarChar
+  password       String    @db.VarChar
+  role           String    @db.VarChar
+  avatar         String?
+  gender         String?   @db.VarChar
+  phone_number   String    @unique @db.VarChar
+  driver_license String
+  birth_date     DateTime? @db.Date
+  create_dt      DateTime? @default(now()) @db.Timestamp(6)
+  update_dt      DateTime? @updatedAt
+  create_by      String?   @db.VarChar
+  update_at      String?   @db.VarChar
+  orders         orders[]
+}
