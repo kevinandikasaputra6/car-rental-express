@@ -8,14 +8,14 @@ datasource db {
 }
 
 model cars {
-  id             BigInt    @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   manufacture    String?   @db.VarChar
   type           String?   @db.VarChar
   license_number String?   @db.VarChar(30)
   seat           Int?
   baggage        Int?
   transmision    String?   @db.VarChar
-  year           DateTime? @db.Date
+  year           String?   @db.VarChar
   name           String?   @db.VarChar
   description    String?
   is_driver      Boolean?
@@ -32,10 +32,10 @@ model cars {
 }
 
 model orders {
-  id          BigInt    @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   order_no    String    @unique @db.VarChar
-  cars_id     BigInt
-  users_id    BigInt
+  cars_id     Int
+  users_id    Int
   start_time  DateTime? @db.Timestamp(6)
   finish_time DateTime? @db.Timestamp(6)
   total       Float?
@@ -52,7 +52,7 @@ model orders {
 }
 
 model users {
-  id             BigInt    @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   fullname       String    @db.VarChar
   email          String    @unique @db.VarChar(30)
   address        String    @db.VarChar

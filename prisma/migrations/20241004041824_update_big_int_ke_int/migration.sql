@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "cars" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "manufacture" VARCHAR,
     "type" VARCHAR,
     "license_number" VARCHAR(30),
@@ -15,7 +15,7 @@ CREATE TABLE "cars" (
     "img" TEXT,
     "price" INTEGER,
     "create_dt" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
-    "update_dt" TIMESTAMP(6),
+    "update_dt" TIMESTAMP(3),
     "create_by" VARCHAR,
     "update_at" VARCHAR,
 
@@ -24,10 +24,10 @@ CREATE TABLE "cars" (
 
 -- CreateTable
 CREATE TABLE "orders" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "order_no" VARCHAR NOT NULL,
-    "cars_id" BIGINT NOT NULL,
-    "users_id" BIGINT NOT NULL,
+    "cars_id" INTEGER NOT NULL,
+    "users_id" INTEGER NOT NULL,
     "start_time" TIMESTAMP(6),
     "finish_time" TIMESTAMP(6),
     "total" DOUBLE PRECISION,
@@ -35,13 +35,17 @@ CREATE TABLE "orders" (
     "is_expired" BOOLEAN,
     "status" VARCHAR,
     "is_deleted" BOOLEAN,
+    "create_dt" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
+    "update_dt" TIMESTAMP(3),
+    "create_by" VARCHAR,
+    "update_at" VARCHAR,
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "fullname" VARCHAR NOT NULL,
     "email" VARCHAR(30) NOT NULL,
     "address" VARCHAR NOT NULL,
@@ -52,8 +56,8 @@ CREATE TABLE "users" (
     "phone_number" VARCHAR NOT NULL,
     "driver_license" TEXT NOT NULL,
     "birth_date" DATE,
-    "create_dt" TIMESTAMP(6),
-    "update_dt" TIMESTAMP(6),
+    "create_dt" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
+    "update_dt" TIMESTAMP(3),
     "create_by" VARCHAR,
     "update_at" VARCHAR,
 
