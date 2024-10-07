@@ -3,16 +3,15 @@ const prisma = new PrismaClient();
 
 // abstract class
 class BaseModel {
+  //encapsulation
   constructor(model) {
     this.model = prisma[model];
   }
-
-  get = async ({ where, include, q = {} }) => {
-    const { sortBy = "created_dt", sort = "desc", page = 1, limit = 10 } = q;
+  get = async ({ where = {}, q = {} }) => {
+    const { sortBy = "create_dt", sort = "desc", page = 1, limit = 10 } = q;
     const query = {
       select: this.select,
       where,
-      include,
       orderBy: {
         [sortBy]: sort,
       },
@@ -20,16 +19,23 @@ class BaseModel {
       take: limit,
     };
 
-    const [resource, count] = await prisma.$transaction([
+    const [resources, count] = await prisma.$transaction([
       this.model.findMany(query),
-      this.model.count(query),
+      this.model.count(),
     ]);
 
-    return { resources: resource, count };
+    return {
+      resources,
+      count,
+    };
+  };
+
+  getById = async (id) => {
+    return this.model.findUnique({ where: { id: Number(id) } });
   };
 
   getOne = async (query) => {
-    return this.model.findUnique(query);
+    return this.model.findFirst(query);
   };
 
   set = async (data) => {
@@ -37,11 +43,16 @@ class BaseModel {
   };
 
   update = async (id, data) => {
-    return this.model.update({ where: { id }, data });
+    return this.model.update({
+      where: { id: Number(id) },
+      data,
+    });
   };
 
   delete = async (id) => {
-    return this.model.delete({ where: { id } });
+    return this.model.delete({
+      where: { id: Number(id) },
+    });
   };
 
   count = async () => {

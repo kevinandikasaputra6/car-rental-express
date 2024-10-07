@@ -1,19 +1,26 @@
-require("dotenv").config();
-const express = require("express");
-const http = require("http");
-const routes = require("./src/routes");
+require("dotenv").config(); // npm install dotenv
+const express = require("express"); // npm install express
+const http = require("http"); // tinggal panggil
+// const routes = require("./src/routes");
 const PORT = 3000;
 
-const app = express();
-const server = http.createServer(app);
+const app = express(); // deklarasi fungsi express
+const server = http.createServer(app); // untuk buat backend server
+const errorHandler = require("./src/middlewares/errorHandler");
 
-app.use(express.json());
+require("./src/helpers/errors");
 
-app.use(routes);
+app.use(express.json()); // buat body saat post/put berbentuk json
+
+require("./src/routes")(app);
+
+// app.use(routes); // app.use fungsi express untuk
 
 app.use((req, res) => {
-  res.status(404).send("Page Not Found");
+  res.status(404).send("Sorry, page not found!");
 });
+
+app.use(errorHandler);
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
