@@ -14,7 +14,7 @@ const userSchema = Joi.object({
   fullname: Joi.string().required(),
   email: Joi.string().email().required(),
   address: Joi.string().required(),
-  password: Joi.string().required(),
+  password: Joi.string().min(8).required(),
   role: Joi.string().required(),
   avatar: Joi.string().allow(null),
   gender: Joi.string().allow(null),
