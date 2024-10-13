@@ -7,10 +7,11 @@ const BaseController = require("../base");
 const UserModel = require("../../models/users");
 const ValidationError = require("../../helpers/errors/validation");
 const { encryptPassword } = require("../../helpers/bcrypt");
+const { authorize, checkRole } = require("../../middlewares/authorization");
 
 const users = new UserModel();
 
-const userSchema = Joi.object({
+const newUserSchema = Joi.object({
   fullname: Joi.string().required(),
   email: Joi.string().email().required(),
   address: Joi.string().required(),
@@ -23,6 +24,16 @@ const userSchema = Joi.object({
   birth_date: Joi.string(),
 });
 
+const updateUserSchema = Joi.object({
+  fullname: Joi.string().required(),
+  address: Joi.string().required(),
+  role: Joi.string().required(),
+  avatar: Joi.string().allow(null),
+  gender: Joi.string().allow(null),
+  driver_license: Joi.string().required(),
+  birth_date: Joi.string(),
+});
+
 class UsersController extends BaseController {
   constructor(model) {
     super(model);
@@ -30,7 +41,9 @@ class UsersController extends BaseController {
     this.router.get("/", this.getAll);
     this.router.post(
       "/",
-      this.validation(userSchema),
+      this.validation(newUserSchema),
+      authorize,
+      checkRole(["admin"]),
       this.checkUnique,
       this.encrypt,
       this.create
@@ -38,7 +51,9 @@ class UsersController extends BaseController {
     this.router.get("/:id", this.get);
     this.router.put(
       "/:id",
-      this.validation(userSchema),
+      this.validation(updateUserSchema),
+      authorize,
+      checkRole(["admin"]),
       this.checkUnique,
       this.update
     );

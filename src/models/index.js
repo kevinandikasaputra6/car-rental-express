@@ -38,11 +38,11 @@ class BaseModel {
     return this.model.findFirst(query);
   };
 
-  set = async (data) => {
+  set = (data) => {
     return this.model.create({ data });
   };
 
-  update = async (id, data) => {
+  update = (id, data) => {
     return this.model.update({
       where: { id: Number(id) },
       data,
@@ -55,10 +55,14 @@ class BaseModel {
     });
   };
 
-  count = async () => {
+  count = async (where) => {
     return this.model.count({
-      where: this.where,
+      where,
     });
+  };
+
+  transaction = async (query) => {
+    return prisma.$transaction(query);
   };
 }
 

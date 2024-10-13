@@ -233,6 +233,7 @@ const router = express.Router();
 
 const BaseController = require("../base");
 const CarModel = require("../../models/cars");
+const { authorize, checkRole } = require("../../middlewares/authorization");
 
 const cars = new CarModel();
 
@@ -240,15 +241,15 @@ const carSchema = Joi.object({
   name: Joi.string().required(),
   price: Joi.number().required(),
   type: Joi.string(),
-  manufactur: Joi.string().required(),
-  isDriver: Joi.boolean().required(),
+  manufacture: Joi.string().required(),
+  is_driver: Joi.boolean().required(),
   img: Joi.string().uri().allow(null),
   description: Joi.string().allow(null),
-  isAvailable: Joi.boolean(),
-  licenseNumber: Joi.string(),
+  is_available: Joi.boolean(),
+  license_number: Joi.string(),
   seat: Joi.number().min(2),
   baggage: Joi.number(),
-  transmission: Joi.string(),
+  transmision: Joi.string(),
   year: Joi.string(),
 });
 
@@ -257,9 +258,21 @@ class CarsController extends BaseController {
     super(model);
     this.router = router;
     this.router.get("/", this.getAll);
-    this.router.post("/", this.validation(carSchema), this.create);
+    this.router.post(
+      "/",
+      this.validation(carSchema),
+      authorize,
+      checkRole(["admin"]),
+      this.create
+    );
     this.router.get("/:id", this.get);
-    this.router.put("/:id", this.validation(carSchema), this.update);
+    this.router.put(
+      "/:id",
+      this.validation(carSchema),
+      authorize,
+      checkRole(["admin"]),
+      this.update
+    );
     this.router.delete("/:id", this.delete);
   }
 }

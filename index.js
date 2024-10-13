@@ -1,8 +1,12 @@
 require("dotenv").config(); // npm install dotenv
 const express = require("express"); // npm install express
+const path = require("path");
 const http = require("http"); // tinggal panggil
-// const routes = require("./src/routes");
+const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./openapi.json");
 const PORT = 3000;
+// const routes = require("./src/routes");
 
 const app = express(); // deklarasi fungsi express
 const server = http.createServer(app); // untuk buat backend server
@@ -10,7 +14,13 @@ const errorHandler = require("./src/middlewares/errorHandler");
 
 require("./src/helpers/errors");
 
+app.use(cors());
+
 app.use(express.json()); // buat body saat post/put berbentuk json
+
+app.use("/public", express.static(path.resolve(__dirname, "public")));
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 require("./src/routes")(app);
 

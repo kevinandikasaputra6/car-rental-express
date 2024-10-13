@@ -69,7 +69,12 @@ class BaseController {
 
   create = async (req, res, next) => {
     try {
-      const resource = await this.model.set(req.body);
+      const data = {
+        ...req.body,
+        create_by: req.user.fullname,
+        update_at: req.user.fullname,
+      };
+      const resource = await this.model.set(data);
 
       return res.status(201).json(
         this.apiSend({
@@ -86,7 +91,12 @@ class BaseController {
   update = async (req, res, next) => {
     const { id } = req.params;
     try {
-      const resource = await this.model.update(id, req.body);
+      const data = {
+        ...req.body,
+        create_by: req.user.fullname,
+        update_at: req.user.fullname,
+      };
+      const resource = await this.model.update(id, data);
 
       return res.status(200).json(
         this.apiSend({
