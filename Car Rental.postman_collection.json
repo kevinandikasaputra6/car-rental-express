@@ -1,0 +1,937 @@
+{
+	"info": {
+		"_postman_id": "9efb24b3-aeca-4bae-9ee8-1341a288eefc",
+		"name": "Car Rental",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12895239"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields - id, fullname, email, role, phone_number, address\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    responseData.data.forEach(function(user) {",
+									"        pm.expect(user).to.have.property('id');",
+									"        pm.expect(user).to.have.property('fullname');",
+									"        pm.expect(user).to.have.property('email');",
+									"        pm.expect(user).to.have.property('role');",
+									"        pm.expect(user).to.have.property('phone_number');",
+									"        pm.expect(user).to.have.property('address');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data array is present and contains expected number of elements\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('array');",
+									"    pm.expect(responseData.data).to.have.lengthOf(1); // Update the expected length as per the actual response",
+									"});",
+									"",
+									"",
+									"pm.test(\"Id is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.data.forEach(function(user) {",
+									"        pm.expect(user.id).to.be.a('number').and.to.satisfy((id) => id >= 0, \"Id should be a non-negative integer\");",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Email is in a valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.data.forEach(function(user) {",
+									"        pm.expect(user.email).to.be.a('string').and.to.match(/^[\\w-]+@([\\w-]+\\.)+[\\w-]+$/, \"Email should be in a valid format\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/users",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "test",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{hostname}}/users",
+									"host": [
+										"{{hostname}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"code\": 200,\r\n    \"status\": \"success\",\r\n    \"message\": \"Data fetched successfully\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"09241092512093\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 7,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir6@mail.com\",\r\n            \"role\": \"admin\",\r\n            \"phone_number\": \"0869\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 6,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir5@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"09241092512012\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 5,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir4@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"092410925120\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir3@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"09241092512091\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir2@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"0924109251209\",\r\n            \"address\": \"JL\"\r\n        }\r\n    ],\r\n    \"page\": 1,\r\n    \"limit\": 10,\r\n    \"totalPage\": 1,\r\n    \"total\": 6\r\n}"
+						}
+					]
+				},
+				{
+					"name": "get user by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.have.property('id');",
+									"    pm.expect(responseData).to.have.property('fullname');",
+									"    pm.expect(responseData).to.have.property('email');",
+									"    pm.expect(responseData).to.have.property('password');",
+									"    pm.expect(responseData).to.have.property('role');",
+									"    pm.expect(responseData).to.have.property('address');",
+									"    pm.expect(responseData).to.have.property('gender');",
+									"    pm.expect(responseData).to.have.property('phone_number');",
+									"    pm.expect(responseData).to.have.property('birthdate');",
+									"    pm.expect(responseData).to.have.property('createdDt');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Email is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.data.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Phone number is in a valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data.phone_number).to.match(/^\\d{10}$/);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object contains the expected number of elements\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('object');",
+									"    pm.expect(Object.keys(responseData.data)).to.have.lengthOf(12);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/users/1",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    const requiredFields = [\"id\", \"manufacturer\", \"type\", \"licenseNumber\", \"seat\", \"baggage\", \"transmision\", \"year\", \"name\", \"description\", \"isDriver\", \"isAvailable\", \"img\", \"price\", \"createdDt\", \"updatedDt\", \"createdBy\", \"updatedBy\"];",
+									"    requiredFields.forEach(field => {",
+									"        pm.expect(responseData).to.have.property(field);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"License number is in a valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data.licenseNumber).to.match(/[A-Z0-9]{3}-[A-Z0-9]{3}-[A-Z0-9]{3}/);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object is present in the response\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.have.property('data');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Ensure that 'isDriver' and 'isAvailable' are boolean values\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.isDriver).to.be.a('boolean');",
+									"  pm.expect(responseData.isAvailable).to.be.a('boolean');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/cars/3",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullname\": \"Amir\",\r\n    \"email\": \"amir6@mail.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"USER\",\r\n    \"address\": \"JL\",\r\n    \"gender\": \"laki-laki\",\r\n    \"avatar\": null,\r\n    \"phone_number\": \"0869\",\r\n    \"driver_license\": null,\r\n    \"birthdate\": \"2014-04-04\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/users",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"manufactur\": \"Toyota\",\r\n    \"type\": \"MPV\",\r\n    \"licenseNumber\": \"B 11 M\",\r\n    \"seat\": 5,\r\n    \"baggage\": 50,\r\n    \"transmision\": \"Matic\",\r\n    \"year\": \"2020-09-30T17:00:00.000Z\",\r\n    \"name\": \"Yaris\",\r\n    \"description\": \"Mobil luas\",\r\n    \"isDriver\": false,\r\n    \"isAvailable\": true,\r\n    \"img\": null,\r\n    \"price\": 150000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/cars/1",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cars",
+			"item": [
+				{
+					"name": "get cars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data array is present in the response and contains the expected number of elements\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('array');",
+									"    pm.expect(responseData.data).to.have.lengthOf(1); // Replace 1 with the expected number of elements",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data properties are of the correct type and format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;",
+									"",
+									"    responseData.data.forEach(function(car) {",
+									"        pm.expect(car.id).to.be.a('number').that.is.greaterThanOrEqual(0);",
+									"        pm.expect(car.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"        pm.expect(car.manufactur).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"        pm.expect(car.year).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"        pm.expect(car.price).to.be.a('number').that.is.greaterThanOrEqual(0);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the presence of page, limit, totalPage, and total fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    responseData.data.forEach(function(car) {",
+									"        pm.expect(car).to.have.property('page');",
+									"        pm.expect(car).to.have.property('limit');",
+									"        pm.expect(car).to.have.property('totalPage');",
+									"        pm.expect(car).to.have.property('total');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/cars?search=GR&yearMin=2024&type=SUV",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "GR"
+								},
+								{
+									"key": "yearMin",
+									"value": "2024"
+								},
+								{
+									"key": "type",
+									"value": "SUV"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get car by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/cars/5",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete car",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/cars/3",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.equal(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    const requiredFields = [",
+									"        \"id\", \"manufactur\", \"type\", \"licenseNumber\", \"seat\", \"baggage\",",
+									"        \"transmision\", \"year\", \"name\", \"description\", \"isDriver\", \"isAvailable\",",
+									"        \"img\", \"price\", \"createdDt\", \"updatedDt\", \"createdBy\", \"updatedBy\"",
+									"    ];",
+									"    requiredFields.forEach(field => {",
+									"        pm.expect(responseData).to.have.property(field);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"License number is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.data.licenseNumber).to.match(/[A-Z0-9]{6}/);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Created date is in a valid date format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data.createdDt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"Created date should be in valid date format\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object contains all expected keys and corresponding values\", function () {",
+									"    const responseData = pm.response.json().data;",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.include.all.keys(",
+									"        'id', 'manufactur', 'type', 'licenseNumber', 'seat', 'baggage', ",
+									"        'transmision', 'year', 'name', 'description', 'isDriver', ",
+									"        'isAvailable', 'img', 'price', 'createdDt', 'updatedDt', ",
+									"        'createdBy', 'updatedBy'",
+									"    );",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"manufactur\": \"Toyota\",\r\n    \"type\": \"MPV\",\r\n    \"licenseNumber\": \"B 11 M\",\r\n    \"seat\": 5,\r\n    \"baggage\": 50,\r\n    \"transmision\": \"Matic\",\r\n    \"year\": \"2020-09-30T17:00:00.000Z\",\r\n    \"name\": \"Yaris\",\r\n    \"description\": \"Mobil luas\",\r\n    \"isDriver\": false,\r\n    \"isAvailable\": true,\r\n    \"img\": null,\r\n    \"price\": 150000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/cars",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"manufactur\": \"Toyota\",\r\n    \"type\": \"MPV\",\r\n    \"licenseNumber\": \"B 11 M\",\r\n    \"seat\": 5,\r\n    \"baggage\": 50,\r\n    \"transmision\": \"Matic\",\r\n    \"year\": \"2020-09-30T17:00:00.000Z\",\r\n    \"name\": \"Yaris\",\r\n    \"description\": \"Mobil luas\",\r\n    \"isDriver\": false,\r\n    \"isAvailable\": true,\r\n    \"img\": null,\r\n    \"price\": 150000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/cars/1",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "download",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/cars/export",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "import xlsx",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Downloads/cars_import_template.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/cars/import",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"import"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Stores the user's token in an environment or global variable\r",
+									"var responseBody = pm.response.json();\r",
+									"var userToken = responseBody.data.token;\r",
+									"pm.globals.set(\"token\", userToken);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"amir6@mail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/auth/signin",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"amir6@mail.com\",\r\n    \"password\": \"@23123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/auth/signup",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"car_id\": 18,\r\n    \"start_time\": \"2024-09-10\",\r\n    \"end_time\": \"2024-09-11\",\r\n    \"is_driver\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payment\": 150000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/order/10/payment",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"order",
+								"10",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "invoice",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payment\": 150000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/order/10/invoice",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"order",
+								"10",
+								"invoice"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "local",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Pictures/untitled.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/upload/local",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"upload",
+								"local"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cloud",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Pictures/untitled.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/upload/",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"upload",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get local file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/public/uploads/file-1728546892969-177844329.JPG",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"public",
+								"uploads",
+								"file-1728546892969-177844329.JPG"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostname",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		}
+	]
+}

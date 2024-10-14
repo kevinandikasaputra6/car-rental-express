@@ -23,7 +23,7 @@ model cars {
   img            String?
   price          Int?
   create_dt      DateTime? @default(now()) @db.Timestamp(6)
-  update_dt      DateTime? @updatedAt
+  update_dt      DateTime?
   create_by      String?   @db.VarChar
   update_at      String?   @db.VarChar
   orders         orders[]
@@ -44,11 +44,11 @@ model orders {
   status      String?   @db.VarChar
   is_deleted  Boolean?
   create_dt   DateTime? @default(now()) @db.Timestamp(6)
-  update_dt   DateTime? @updatedAt
+  update_dt   DateTime?
   create_by   String?   @db.VarChar
   update_at   String?   @db.VarChar
-  cars        cars?     @relation(fields: [cars_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users       users?    @relation(fields: [users_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cars        cars      @relation(fields: [cars_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users       users     @relation(fields: [users_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model users {
@@ -64,7 +64,7 @@ model users {
   driver_license String?
   birth_date     String?
   create_dt      DateTime? @default(now()) @db.Timestamp(6)
-  update_dt      DateTime? @updatedAt
+  update_dt      DateTime?
   create_by      String?   @db.VarChar
   update_at      String?   @db.VarChar
   orders         orders[]

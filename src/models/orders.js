@@ -5,9 +5,17 @@ class OrdersModel extends BaseModel {
     super("orders");
     this.select = {
       id: true,
-      users_id: true,
-      cars_id: true,
-      create_dt: true,
+      order_no: true,
+      users: {
+        select: {
+          fullname: true,
+        },
+      },
+      cars: {
+        select: {
+          name: true,
+        },
+      },
       status: true,
     };
   }

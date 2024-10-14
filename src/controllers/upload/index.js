@@ -15,6 +15,7 @@ class UploadController extends BaseController {
   upload = async (req, res, next) => {
     try {
       const { file } = req;
+      console.log(req.file);
       // mengambil file dari url buffer, karena file bisa di convert ke sebuah url dengan tipe base64
       const allowedFile = [
         "image/png", // png
@@ -22,7 +23,7 @@ class UploadController extends BaseController {
         "image/svg+xml", // svg
         "application/pdf", // pdf
         "application/vnd.ms-excel", // xls
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlxs
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
       ];
 
       if (allowedFile.includes(file.mimetype) === false) {

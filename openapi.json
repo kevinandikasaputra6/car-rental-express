@@ -1208,7 +1208,7 @@
             "type": "number",
             "example": 50
           },
-          "transmission": {
+          "transmision": {
             "type": "string",
             "example": "CVT"
           },
@@ -1269,7 +1269,7 @@
               "licenseNumber": "T 1235 TI",
               "seat": 5,
               "baggage": 50,
-              "transmission": "CVT",
+              "transmision": "CVT",
               "year": 2020,
               "description": "Mobil kecil enak buat nyalip",
               "isDriver": false,

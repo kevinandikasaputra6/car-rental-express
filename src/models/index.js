@@ -21,7 +21,7 @@ class BaseModel {
 
     const [resources, count] = await prisma.$transaction([
       this.model.findMany(query),
-      this.model.count(),
+      this.model.count(where),
     ]);
 
     return {
@@ -30,8 +30,8 @@ class BaseModel {
     };
   };
 
-  getById = async (id) => {
-    return this.model.findUnique({ where: { id: Number(id) } });
+  getById = async (id, select) => {
+    return this.model.findUnique({ where: { id: Number(id) }, select });
   };
 
   getOne = async (query) => {
@@ -40,6 +40,10 @@ class BaseModel {
 
   set = (data) => {
     return this.model.create({ data });
+  };
+
+  setMany = (data) => {
+    return this.model.createMany({ data });
   };
 
   update = (id, data) => {

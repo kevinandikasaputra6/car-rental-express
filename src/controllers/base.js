@@ -1,7 +1,9 @@
 // abstraction / abtract class
 // const express = require("express");
 // const router = express.Router();
+const ValidationError = require("../helpers/errors/validation");
 const validation = require("../middlewares/validation");
+const { generateXLSX, readXLSX } = require("../helpers/xlsx");
 const { Prisma } = require("@prisma/client");
 
 class BaseController {
@@ -13,12 +15,21 @@ class BaseController {
 
   getAll = async (req, res, next) => {
     try {
-      const {
+      let {
         sortBy = "create_dt",
         sort = "desc",
         page = 1,
         limit = 10,
+        search = undefined,
       } = req.query;
+
+      if (search) search = this.handleSearch(search);
+      if (this.filter) {
+        search = {
+          ...search,
+          AND: this.filter,
+        };
+      }
 
       const { resources, count } = await this.model.get({
         q: {
@@ -27,6 +38,7 @@ class BaseController {
           page,
           limit,
         },
+        where: search,
       });
 
       return res.status(200).json(
@@ -44,7 +56,7 @@ class BaseController {
         })
       );
     } catch (err) {
-      return next(new ServerError(err));
+      next(new ServerError(err));
     }
   };
 
@@ -138,6 +150,79 @@ class BaseController {
       }
       next(new ServerError(err));
     }
+  };
+
+  export = (title) => {
+    return async (req, res, next) => {
+      const {
+        sortBy = "create_dt",
+        sort = "desc",
+        page = 1,
+        limit = 10,
+      } = req.query;
+
+      const { resources, count } = await this.model.get({
+        q: {
+          sortBy,
+          sort,
+          page,
+          limit,
+        },
+        select: undefined,
+      });
+
+      generateXLSX(title, resources, res);
+    };
+  };
+
+  import = async (req, res, next) => {
+    try {
+      const { file } = req;
+      console.log(file);
+      const allowedFile = [
+        "application/vnd.ms-excel", //xls
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", //xlsx
+      ];
+
+      if (allowedFile.includes(file.mimetype) === false) {
+        return next(new ValidationError("File not allowed"));
+      }
+
+      const data = readXLSX(file);
+
+      if (!data) {
+        return next(new ValidationError("Data is empty or corrupted!"));
+      }
+
+      const importData = await this.model.setMany(data);
+
+      return res.status(200).json(
+        this.apiSend({
+          code: 200,
+          message: "Imported successfully",
+          status: "success",
+          data: importData,
+        })
+      );
+    } catch (e) {
+      console.log(e);
+      next(new ServerError("Something went wrong"));
+    }
+  };
+
+  //fungsi ini digunakan untuk menghandle pencarian data
+  //fungsi ini akan mengembalikan object yang berisi key "OR" dan value berupa array of object
+  //setiap object dalam array memiliki key sama dengan field yang ada di model dan value berupa object yang memiliki key "contains" dan "mode"
+  //key "contains" berisi nilai yang akan dicari dan key "mode" berisi nilai "insensitive" yang berarti pencarian tidak akan memperhatikan huruf besar/kecil
+  handleSearch = (search) => {
+    const s = {
+      contains: search,
+      mode: "insensitive",
+    };
+
+    return {
+      OR: this.searchField.map((e) => ({ [e]: s })),
+    };
   };
 
   apiSend({ code, status, message, data, pagination }) {
