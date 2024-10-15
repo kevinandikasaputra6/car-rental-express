@@ -23,7 +23,7 @@ model cars {
   img            String?
   price          Int?
   create_dt      DateTime? @default(now()) @db.Timestamp(6)
-  update_dt      DateTime?
+  update_dt      DateTime? @updatedAt
   create_by      String?   @db.VarChar
   update_at      String?   @db.VarChar
   orders         orders[]
@@ -44,7 +44,7 @@ model orders {
   status      String?   @db.VarChar
   is_deleted  Boolean?
   create_dt   DateTime? @default(now()) @db.Timestamp(6)
-  update_dt   DateTime?
+  update_dt   DateTime? @updatedAt
   create_by   String?   @db.VarChar
   update_at   String?   @db.VarChar
   cars        cars      @relation(fields: [cars_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -57,15 +57,59 @@ model users {
   email          String    @unique @db.VarChar(30)
   address        String?   @db.VarChar
   password       String    @db.VarChar
-  role           String    @db.VarChar
   avatar         String?
   gender         String?   @db.VarChar
   phone_number   String?   @unique @db.VarChar
   driver_license String?
   birth_date     String?
+  role_id        Int
   create_dt      DateTime? @default(now()) @db.Timestamp(6)
-  update_dt      DateTime?
+  update_dt      DateTime? @updatedAt
   create_by      String?   @db.VarChar
   update_at      String?   @db.VarChar
   orders         orders[]
+  role           roles     @relation(fields: [role_id], references: [id], onDelete: Cascade)
+}
+
+model roles {
+  id        Int       @id @default(autoincrement())
+  role      String    @unique
+  create_dt DateTime? @default(now()) @db.Timestamp(6)
+  update_dt DateTime? @updatedAt
+  create_by String?   @db.VarChar
+  update_at String?   @db.VarChar
+  access    access[]
+  users     users[]
+}
+
+model menus {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  title      String
+  icon       String?
+  path       String?
+  is_submenu Boolean?  @default(false)
+  parent_id  Int?
+  permission String[]
+  create_dt  DateTime? @default(now()) @db.Timestamp(6)
+  update_dt  DateTime? @updatedAt
+  create_by  String?   @db.VarChar
+  update_at  String?   @db.VarChar
+  submenu    menus?    @relation("submenu", fields: [parent_id], references: [id])
+  parent     menus[]   @relation("submenu")
+  access     access[]
+}
+
+model access {
+  id        Int       @id @default(autoincrement())
+  role_id   Int
+  menu_id   Int
+  visible   Boolean?  @default(true)
+  grant     Json
+  create_dt DateTime? @default(now()) @db.Timestamp(6)
+  update_dt DateTime? @updatedAt
+  create_by String?   @db.VarChar
+  update_at String?   @db.VarChar
+  roles     roles     @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  menu      menus     @relation(fields: [menu_id], references: [id], onDelete: Cascade)
 }
