@@ -233,6 +233,7 @@ const CarModel = require("../../models/cars");
 const express = require("express");
 const { authorize, checkRole } = require("../../middlewares/authorization");
 const { memory } = require("../../middlewares/upload");
+const rbac = require("../../middlewares/rbac");
 var router = express.Router();
 
 const cars = new CarModel();
@@ -262,7 +263,7 @@ class CarsController extends BaseController {
       "/",
       this.validation(carSchema),
       authorize,
-      checkRole(["admin"]),
+      rbac("CARS", "create"), // cars menunya, create yang ada di grant(permissionnya)
       this.create
     );
     router.get("/export", this.export("cars export"));
@@ -272,7 +273,7 @@ class CarsController extends BaseController {
       "/:id",
       this.validation(carSchema),
       authorize,
-      checkRole(["admin"]),
+      rbac("CARS", "update"),
       this.update
     );
     router.delete("/:id", this.delete);

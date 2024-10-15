@@ -86,6 +86,8 @@ class BaseController {
         create_by: req.user.fullname,
         update_at: req.user.fullname,
       };
+      console.log(req.user);
+
       const resource = await this.model.set(data);
 
       return res.status(201).json(

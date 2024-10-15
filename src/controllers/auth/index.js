@@ -24,7 +24,7 @@ const signUpSchema = Joi.object({
 
 const signInSchema = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().min(8).required(),
+  password: Joi.string().required(),
 });
 
 class AuthController extends BaseController {
@@ -32,12 +32,7 @@ class AuthController extends BaseController {
     super(model);
     this.router = router;
     this.router.post("/signin", this.validation(signInSchema), this.signIn);
-    this.router.post(
-      "/signup",
-      this.validation(signUpSchema),
-      this.encrypt,
-      this.signUp
-    );
+    this.router.post("/signup", this.validation(signUpSchema), this.signUp);
   }
 
   signIn = async (req, res, next) => {
@@ -49,7 +44,6 @@ class AuthController extends BaseController {
           email,
         },
       }); // cari email
-
       if (!user) return next(new ValidationError("Invalid email or password")); // jika email tidak ditemukan
 
       const isMatch = await checkPassword(password, user.password);
@@ -96,7 +90,7 @@ class AuthController extends BaseController {
           email,
         },
       });
-
+      console.log(password, await encryptPassword(password));
       if (user) {
         return next(new ValidationError("Email already registered"));
       }
@@ -104,7 +98,7 @@ class AuthController extends BaseController {
       const newUser = await this.model.set({
         email,
         password: await encryptPassword(password),
-        role: "user",
+        role_id: 3,
       });
 
       return res.status(201).json(
