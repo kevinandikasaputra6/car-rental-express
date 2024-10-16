@@ -1,4 +1,8 @@
-require("dotenv").config(); // npm install dotenv
+const envPath =
+  process.env.NODE_ENV === "development"
+    ? ".env"
+    : `.env.${process.env.NODE_ENV}`; // .env || .env.test
+require("dotenv").config({ path: envPath }); // npm install dotenv
 const express = require("express"); // npm install express
 const app = express(); // deklarasi fungsi express
 const path = require("path");
@@ -39,10 +43,11 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port http://localhost:${PORT}`);
 });
 
+module.exports = server;
 // app.get("/", (req, res) => {
 //   res.status(200).send("KEVIN GANTENG");
 // });
