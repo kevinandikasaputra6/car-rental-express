@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1729068954406" clover="3.2.0">
-  <project timestamp="1729068954406" name="All files">
-    <metrics statements="495" coveredstatements="240" conditionals="92" coveredconditionals="5" methods="75" coveredmethods="22" elements="662" coveredelements="267" complexity="0" loc="495" ncloc="495" packages="12" files="29" classes="29"/>
+<coverage generated="1729138808681" clover="3.2.0">
+  <project timestamp="1729138808681" name="All files">
+    <metrics statements="495" coveredstatements="251" conditionals="92" coveredconditionals="7" methods="75" coveredmethods="25" elements="662" coveredelements="283" complexity="0" loc="495" ncloc="495" packages="12" files="29" classes="29"/>
     <package name="nodejs">
       <metrics statements="22" coveredstatements="20" conditionals="3" coveredconditionals="2" methods="3" coveredmethods="1"/>
       <file name="index.js" path="/Users/kevassss/nodejs/index.js">
@@ -106,7 +106,7 @@
         <line num="220" count="0" type="stmt"/>
         <line num="225" count="0" type="stmt"/>
         <line num="226" count="0" type="stmt"/>
-        <line num="231" count="1" type="stmt"/>
+        <line num="231" count="2" type="stmt"/>
         <line num="241" count="1" type="stmt"/>
       </file>
       <file name="index.js" path="/Users/kevassss/nodejs/src/controllers/index.js">
@@ -120,9 +120,9 @@
       </file>
     </package>
     <package name="nodejs.src.controllers.auth">
-      <metrics statements="41" coveredstatements="26" conditionals="6" coveredconditionals="1" methods="4" coveredmethods="2"/>
+      <metrics statements="41" coveredstatements="34" conditionals="6" coveredconditionals="3" methods="4" coveredmethods="3"/>
       <file name="index.js" path="/Users/kevassss/nodejs/src/controllers/auth/index.js">
-        <metrics statements="41" coveredstatements="26" conditionals="6" coveredconditionals="1" methods="4" coveredmethods="2"/>
+        <metrics statements="41" coveredstatements="34" conditionals="6" coveredconditionals="3" methods="4" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -138,15 +138,15 @@
         <line num="34" count="1" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="47" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="51" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="52" count="0" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
         <line num="73" count="0" type="stmt"/>
         <line num="77" count="1" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
@@ -347,15 +347,15 @@
       </file>
     </package>
     <package name="nodejs.src.helpers">
-      <metrics statements="63" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="15" coveredmethods="1"/>
+      <metrics statements="63" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="15" coveredmethods="3"/>
       <file name="bcrypt.js" path="/Users/kevassss/nodejs/src/helpers/bcrypt.js">
-        <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
       </file>
       <file name="cloudinary.js" path="/Users/kevassss/nodejs/src/helpers/cloudinary.js">
@@ -405,10 +405,10 @@
         <line num="180" count="1" type="stmt"/>
       </file>
       <file name="jwt.js" path="/Users/kevassss/nodejs/src/helpers/jwt.js">
-        <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
       </file>
@@ -528,11 +528,11 @@
       <file name="validation.js" path="/Users/kevassss/nodejs/src/middlewares/validation.js">
         <metrics statements="13" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
         <line num="2" count="7" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="7" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="8" count="0" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
@@ -571,7 +571,7 @@
         <line num="35" count="7" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
         <line num="39" count="7" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
         <line num="43" count="7" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
         <line num="47" count="7" type="stmt"/>

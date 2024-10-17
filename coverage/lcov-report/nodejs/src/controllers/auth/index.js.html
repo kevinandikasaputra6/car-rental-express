@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.9% </span>
+                <span class="strong">80.95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/42</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>34/42</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>2/4</span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.41% </span>
+                <span class="strong">75% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>3/4</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">82.92% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/41</span>
+                <span class='fraction'>34/41</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -221,24 +221,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -340,25 +340,25 @@ class AuthController extends BaseController {
     this.router.post("/signup", this.validation(signUpSchema), this.signUp);
   }
 &nbsp;
-  signIn = <span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span> // ambil email dan password
+  signIn = async (req, res, next) =&gt; {
+    try {
+      const { email, password } = req.body; // ambil email dan password
 &nbsp;
-      const user = <span class="cstat-no" title="statement not covered" >await this.model.getOne({</span>
+      const user = await this.model.getOne({
         where: {
           email,
         },
       }); // cari email
-<span class="cstat-no" title="statement not covered" >      if (!user) <span class="cstat-no" title="statement not covered" >return next(new ValidationError("Invalid email or password")); </span></span>// jika email tidak ditemukan
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!user) <span class="cstat-no" title="statement not covered" >return next(new ValidationError("Invalid email or password")); </span>// jika email tidak ditemukan
 &nbsp;
-      const isMatch = <span class="cstat-no" title="statement not covered" >await checkPassword(password, user.password);</span>
+      const isMatch = await checkPassword(password, user.password);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (!isMatch)</span>
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!isMatch)
 <span class="cstat-no" title="statement not covered" >        return next(new ValidationError("Invalid email or password")); </span>// jika password tidak cocok
 &nbsp;
-      const token = <span class="cstat-no" title="statement not covered" >createToken({ id: user.id });</span> // buat token
+      const token = createToken({ id: user.id }); // buat token
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      return res.status(200).json(</span>
+      return res.status(200).json(
         this.apiSend({
           code: 200,
           status: "success",
@@ -430,7 +430,7 @@ module.exports = authController.router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-16T08:55:54.386Z
+                at 2024-10-17T04:20:08.659Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
